@@ -19,44 +19,18 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TwitterBot {
-	
-	
-	
-	//static char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-	//static StringBuilder sb = new StringBuilder();
-	//static Random random = new Random();
-	
+
 	static String ip;
-	//static File[] roots = File.listRoots();
 	
 	public static void main(String[] args) throws TwitterException, IOException {
-		//getIP();
-		filter();
-		//for (File root : roots) {
-			//post("77C453B0t v1.0 \n" + "Available processors (cores): " + Runtime.getRuntime().availableProcessors() + "\n" + "RAM Usage (MB): " + ((double)Runtime.getRuntime().freeMemory()  / 1048576) + "\n" + "Total space (GB): " + root.getTotalSpace() / 1073741824);
-		//}
 		
-		//int i=0;
-		//for (int i=0; i < 249; i++)
-		//{
-			
-			//post("@User" + i);
-		//}
-		
-		//for(int i=0; i<100; i++)
-			//post(" ");
-		//post("");
-		//GetTimeline();
-		//for (int i = 0; i < 20; i++) {
-		    //char c = chars[random.nextInt(chars.length)];
-		    //sb.append(c);
-		    //post(sb.toString());
-		//}
 	}
 
-	private static void post(String input) throws TwitterException {
+	private static void post(String input, File media) throws TwitterException {
 		Twitter twitter = TwitterFactory.getSingleton();
-		Status status = twitter.updateStatus(input);
+		StatusUpdate status = new StatusUpdate(input); status.setMedia(media);
+
+twitter.updateStatus(status);
 	    System.out.println("Successfully updated the status to [" + status.getText() + "].");
 	}
 	
@@ -131,6 +105,15 @@ public class TwitterBot {
                 // TODO Auto-generated method stub
 
             }
+
+public void privateMessage(String message, String AccountName)
+{
+    // The factory instance is re-useable and thread safe.
+    Twitter sender = TwitterFactory.getSingleton();
+    DirectMessage message = sender.sendDirectMessage(AccountName, message);
+    System.out.println("Sent: " +  message.getText() + " to @" + message.getRecipientScreenName());
+
+}
 
             @Override
             public void onStatus(Status status) {
